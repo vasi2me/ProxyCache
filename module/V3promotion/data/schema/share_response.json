@@ -1,0 +1,33 @@
+{
+	"type":"object",
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"id": "http://jsonschema.net",
+	"required":false,
+	"properties":{
+		"promotionsShareOfferPOSTResponse": {
+			"type":"array",
+			"id": "http://jsonschema.net/promotionsShareOfferPOSTResponse",
+			"required":false,
+			"items":
+				{
+					"type":"object",
+					"id": "http://jsonschema.net/promotionsShareOfferPOSTResponse/0",
+					"required":false,
+					"properties":{
+						"error": {
+							"type":"string",
+							"id": "http://jsonschema.net/promotionsShareOfferPOSTResponse/0/error",
+							"required":false
+						},
+						"success": {
+							"type":"string",
+							"id": "http://jsonschema.net/promotionsShareOfferPOSTResponse/0/success",
+							"required":false
+						}
+					}
+				}
+			
+
+		}
+	}
+}
