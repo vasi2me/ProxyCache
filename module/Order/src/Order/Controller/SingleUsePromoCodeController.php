@@ -73,7 +73,8 @@ class SingleUsePromoCodeController extends AbstractRestfulController {
 		}
 		if($contentType == 'application/xml'){
 			// TEMP solution till Zf2 Xml Statregy is implemented
-			return   XmlDecoder::fromXml($request->getContent());
+			$arrayrequest =   XmlDecoder::fromXml($request->getContent());
+			return $this->array_to_object($arrayrequest)->request;
 		}
 		// if we cannot handle it give it back to Framework if latest one might handle it;
 		return parent::processBodyContent($request);
@@ -114,6 +115,7 @@ class SingleUsePromoCodeController extends AbstractRestfulController {
 	}
 
 	public function update($id, $data){
+		
 		$rdata = array("success"=>false, "errors"=> "Application Exception Occured while processing");
 		try {
 			$validator = $this->getServiceLocator()->get('Mock\Service\JsonValidator');
@@ -123,6 +125,7 @@ class SingleUsePromoCodeController extends AbstractRestfulController {
 			if(array_key_exists('v3/order/supc', $schema)){
 				$validator->setSchemaFileLocation($schema['v3/order/supc']);
 			}
+			
 			$validator->validate($data);
 			if($validator->isValid()) {
 				$this->getResponse()->setStatusCode(200);
@@ -163,5 +166,18 @@ class SingleUsePromoCodeController extends AbstractRestfulController {
 		}
 	}
 
-
+	private function array_to_object($array) {
+		$obj = new \stdClass();
+		foreach($array as $k => $v) {
+			if(strlen($k)) {
+				if(is_array($v)) {
+					$obj->{$k} = $this->array_to_object($v); //RECURSION
+				} else {
+					$obj->{$k} = $v;
+				}
+			}
+		}
+		return $obj;
+	}
+	
 }
