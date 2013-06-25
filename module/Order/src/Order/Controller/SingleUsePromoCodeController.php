@@ -116,7 +116,7 @@ class SingleUsePromoCodeController extends AbstractRestfulController {
 
 	public function update($id, $data){
 		
-		$rdata = array("statusCode"=>"FAILURE", "errorMessage"=> "Application Exception Occured while processing");
+		$rdata = array("success"=>false,"errorCode"=>400, "errorMessage"=> "Application Exception Occured while processing");
 		try {
 			$validator = $this->getServiceLocator()->get('Mock\Service\JsonValidator');
 			$cofig = $this->getServiceLocator()->get('config');
@@ -129,16 +129,27 @@ class SingleUsePromoCodeController extends AbstractRestfulController {
 			$validator->validate($data);
 			if($validator->isValid()) {
 				$this->getResponse()->setStatusCode(200);
-				$rdata = array("statusCode"=>"SUCCESS");
+				if($data->reservationId < 1000){
+					$rdata = array("success"=>false, "errorCode"=> 400, "errorMessage" => "INVALID Reservation ID in Request");
+				}
+				else if($data->promoCode == "DUMMY"){
+					$rdata = array("success"=>false, "errorCode"=> 400, "errorMessage" => "INVALID PromoCode in Request");
+				}
+				else if($data->orderNumber == "DUMMY"){
+					$rdata = array("success"=>false, "errorCode"=> 400, "errorMessage" => "INVALID OrderNumber in Request");
+				}
+				else {
+				$rdata = array("success"=>true);
+				}
 			}
 			else {
 				$this->getResponse()->setStatusCode(400);
-				$rdata = array("statusCode"=>"FAILURE", "errorMessage"=> $validator->getErrors());
+				$rdata = array("success"=>false,"errorCode"=>400, "errorMessage"=> $validator->getErrorAsString());
 			}
 
 		} catch (\Exception $e) {
 			$this->getResponse()->setStatusCode(500);
-			$rdata = array("statusCode"=>"FAILURE", "errorMessage"=> "Application Exception Occured while processing " . $e->getTraceAsString());
+			$rdata = array("success"=>false,"errorCode"=>500, "errorMessage"=> "Application Exception Occured while processing " . $e->getTraceAsString());
 		}
 		return $this->outModel($rdata);
 	}

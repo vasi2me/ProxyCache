@@ -58,6 +58,23 @@ class JsonValidator implements FactoryInterface {
 	public function getErrors(){
 		return $this->validator->getErrors();
 	}
+
+	/** SG Specific Error String 
+	 * 
+	 * @return string
+	 */
+	public function getErrorAsString(){
+		$msg = "";
+		foreach ($this->getErrors() as $k=>$v){
+			if($k == 0){
+			$msg .= "Error ". $v['property'] ." ". $v['message'] ;
+			}
+			else {
+				$msg .= "; Error ". $v['property'] ." ". $v['message']. " " ;
+			}
+		}
+		return $msg;
+	}
 	
 	/**
 	 * @return \Listner\JsonSchema\Validator
