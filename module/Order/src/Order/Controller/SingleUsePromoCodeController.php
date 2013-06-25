@@ -116,7 +116,7 @@ class SingleUsePromoCodeController extends AbstractRestfulController {
 
 	public function update($id, $data){
 		
-		$rdata = array("statusCode"=>"FAILURE", "errors"=> "Application Exception Occured while processing");
+		$rdata = array("statusCode"=>"FAILURE", "errorMessage"=> "Application Exception Occured while processing");
 		try {
 			$validator = $this->getServiceLocator()->get('Mock\Service\JsonValidator');
 			$cofig = $this->getServiceLocator()->get('config');
@@ -133,12 +133,12 @@ class SingleUsePromoCodeController extends AbstractRestfulController {
 			}
 			else {
 				$this->getResponse()->setStatusCode(400);
-				$rdata = array("statusCode"=>"FAILURE", "errors"=> $validator->getErrors());
+				$rdata = array("statusCode"=>"FAILURE", "errorMessage"=> $validator->getErrors());
 			}
 
 		} catch (\Exception $e) {
 			$this->getResponse()->setStatusCode(500);
-			$rdata = array("statusCode"=>"FAILURE", "errors"=> "Application Exception Occured while processing " . $e->getTraceAsString());
+			$rdata = array("statusCode"=>"FAILURE", "errorMessage"=> "Application Exception Occured while processing " . $e->getTraceAsString());
 		}
 		return $this->outModel($rdata);
 	}
