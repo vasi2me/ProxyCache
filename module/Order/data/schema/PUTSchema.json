@@ -1,0 +1,23 @@
+{
+	"type":"object",
+	"$schema": "http://json-schema.org/draft-03/schema",
+	"id": "http://jsonschema.net",
+	"required":true,
+	"properties":{
+		"orderNumber": {
+			"type":"string",
+			"id": "http://jsonschema.net/orderNumber",
+			"required":true
+		},
+		"promocode": {
+			"type":"string",
+			"id": "http://jsonschema.net/promocode",
+			"required":true
+		},
+		"reservationId": {
+			"type":"number",
+			"id": "http://jsonschema.net/reservationId",
+			"required":false
+		}
+	}
+}

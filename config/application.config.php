@@ -6,7 +6,7 @@ return array (
 				'Mock',
 				'V3promotion',
 				'Shoppingbag',
-				
+				'Order',
 				
 		),
 		'module_listener_options' => array(
