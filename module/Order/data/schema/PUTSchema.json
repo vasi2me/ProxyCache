@@ -9,7 +9,7 @@
 			"id": "http://jsonschema.net/orderNumber",
 			"required":true
 		},
-		"promocode": {
+		"promoCode": {
 			"type":"string",
 			"id": "http://jsonschema.net/promocode",
 			"required":true
@@ -17,7 +17,7 @@
 		"reservationId": {
 			"type":"number",
 			"id": "http://jsonschema.net/reservationId",
-			"required":false
+			"required":true
 		}
 	}
 }
