@@ -11,17 +11,17 @@
 		},
 		"promoCode": {
 			"type":"string",
-			"id": "http://jsonschema.net/promocode",
+			"id": "http://jsonschema.net/promoCode",
 			"required":true
 		},
 		"reservationId": {
 			"type":"number",
 			"id": "http://jsonschema.net/reservationId",
 			"required":true
-		}
+		},
 		"status": {
 			"type":"string",
-			"id": "http://jsonschema.net/reservationId",
+			"id": "http://jsonschema.net/status",
 			"required":true
 		}
 	}
