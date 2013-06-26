@@ -19,5 +19,10 @@
 			"id": "http://jsonschema.net/reservationId",
 			"required":true
 		}
+		"status": {
+			"type":"string",
+			"id": "http://jsonschema.net/reservationId",
+			"required":true
+		}
 	}
 }

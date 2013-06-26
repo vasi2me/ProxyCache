@@ -130,13 +130,16 @@ class SingleUsePromoCodeController extends AbstractRestfulController {
 			if($validator->isValid()) {
 				$this->getResponse()->setStatusCode(200);
 				if($data->reservationId < 1000){
-					$rdata = array("success"=>false, "errorCode"=> 400, "errorMessage" => "INVALID Reservation ID in Request");
+					$rdata = array("success"=>false, "errorCode"=> 400, "errorMessage" => "Error processing request: INVALID_CODE");
 				}
 				else if($data->promoCode == "DUMMY"){
-					$rdata = array("success"=>false, "errorCode"=> 400, "errorMessage" => "INVALID PromoCode in Request");
+					$rdata = array("success"=>false, "errorCode"=> 400, "errorMessage" => "Error processing request: INVALID_CODE");
 				}
 				else if($data->orderNumber == "DUMMY"){
-					$rdata = array("success"=>false, "errorCode"=> 400, "errorMessage" => "INVALID OrderNumber in Request");
+					$rdata = array("success"=>false, "errorCode"=> 400, "errorMessage" => "Error processing request: INVALID_CODE");
+				}
+				else if($data->status != "EXPIRE"){
+					$rdata = array("success"=>false, "errorCode"=> 400, "errorMessage" => "Error processing request:  INVALID_CODE, status value should be EXPIRE");
 				}
 				else {
 				$rdata = array("success"=>true);
