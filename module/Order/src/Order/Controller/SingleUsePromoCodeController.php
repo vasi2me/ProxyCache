@@ -116,7 +116,7 @@ class SingleUsePromoCodeController extends AbstractRestfulController {
 
 	public function update($id, $data){
 		
-		$rdata = array("success"=>false,"errorCode"=>400, "errorMessage"=> "Application Exception Occured while processing");
+		$rdata = array("success"=>false,"errorCode"=>500, "errorMessage"=> "Application Exception Occured while processing");
 		try {
 			$validator = $this->getServiceLocator()->get('Mock\Service\JsonValidator');
 			$cofig = $this->getServiceLocator()->get('config');
@@ -139,7 +139,7 @@ class SingleUsePromoCodeController extends AbstractRestfulController {
 				}
 				else if($data->orderNumber == "DUMMY"){
 					$this->getResponse()->setStatusCode(500);
-					$rdata = array("success"=>false, "errorCode"=> 400, "errorMessage" => "Error processing request: SYSTEM_ERROR");
+					$rdata = array("success"=>false, "errorCode"=> 500, "errorMessage" => "Error processing request: SYSTEM_ERROR");
 				}
 				else if($data->status != "EXPIRE"){
 					$this->getResponse()->setStatusCode(400);
