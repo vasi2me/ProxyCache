@@ -26,6 +26,7 @@ return array (
 		),
 		'controllers' => array(
 				'invokables' => array(
+						//'supc' => 'Order\Controller\SupcController',
 						'supc' => 'Order\Controller\SingleUsePromoCodeController',
 						
 				),
