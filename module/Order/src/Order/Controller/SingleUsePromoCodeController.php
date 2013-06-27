@@ -25,19 +25,19 @@ class SingleUsePromoCodeController extends RestfulController {
 			$validator->validate($data);
 			if($validator->isValid()) {
 				//$this->getResponse()->setStatusCode(200);
-				if($data->reservationId < 1000){
+				if($data->reservationId < 1000 || $data->reservationId == null){
 					$this->getResponse()->setStatusCode(400);
 					$rdata = array("success"=>false, "errorCode"=> 400, "errorMessage" => "Error processing request: INVALID_CODE");
 				}
-				else if($data->promoCode == "DUMMY"){
+				else if($data->promoCode == "DUMMY" || $data->promoCode == ""){
 					$this->getResponse()->setStatusCode(400);
 					$rdata = array("success"=>false, "errorCode"=> 400, "errorMessage" => "Error processing request: ALREADY_USED");
 				}
-				else if($data->orderNumber == "DUMMY"){
+				else if($data->orderNumber == "DUMMY" || $data->orderNumber == ""){
 					$this->getResponse()->setStatusCode(500);
 					$rdata = array("success"=>false, "errorCode"=> 500, "errorMessage" => "Error processing request: SYSTEM_ERROR");
 				}
-				else if($data->status != "EXPIRE"){
+				else if($data->status != "EXPIRE" ){
 					$this->getResponse()->setStatusCode(400);
 					$rdata = array("success"=>false, "errorCode"=> 400, "errorMessage" => "Error processing request:  INVALID_CODE, status value should be EXPIRE");
 				}
