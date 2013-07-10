@@ -7,6 +7,7 @@ return array (
 				'V3promotion',
 				'Shoppingbag',
 				'Order',
+				'Akamai',
 				
 		),
 		'module_listener_options' => array(
