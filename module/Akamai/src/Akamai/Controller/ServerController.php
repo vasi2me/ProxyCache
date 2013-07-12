@@ -10,7 +10,7 @@ use Zend\Soap\Server;
 
 class ServerController extends AbstractActionController {
 	
-	private $WSDL = 'http://L4488129:83/soap/servlet/soap/purge?wsdl';
+	private $WSDL = null;
 	
 	public function indexAction(){
 		/*
@@ -18,7 +18,6 @@ class ServerController extends AbstractActionController {
 		* Goes the parameter accessed function handleWSDL
 		* And load the functions, it will return the WSDL
 		*/
-		print_r($this->url()->fromRoute());exit;
 		if (isset ( $_GET [ 'wsdl' ])) {
 			$this->handleWSDL ();
 		} else {
@@ -41,7 +40,7 @@ class ServerController extends AbstractActionController {
 		$autodiscover -> SetClass ( '\Akamai\Server\PurgeApi' );
 		
 		// We set the Uri return without the parameter? WSDL
-		$autodiscover->setUri( 'http://L4488129:83/soap/servlet/soap/purge' );
+		$autodiscover->setUri( $this->getCurrentURL() );
 		$wsdl = $autodiscover->generate ();
 		$wsdl = $wsdl->toDomDocument ();
 		
@@ -50,8 +49,8 @@ class ServerController extends AbstractActionController {
 	}
 	
 	public  function handleSOAP () {
-		
-		$soap = new Server ( $this->WSDL);
+		$serverWSDL = $this->getCurrentURL() . '?wsdl';
+		$soap = new Server ( $serverWSDL);
 	
 		/**
 		* We create a new directory called the Service and create a class OlaMun the
@@ -61,5 +60,12 @@ class ServerController extends AbstractActionController {
 	
 		// Takes ordered from  the standard input stream
 		$soap->handle ();
+	}
+	
+	private function getCurrentURL(){
+		if($this->WSDL == null)
+		$this->WSDL = $this->url()->fromRoute('Akamai',array(),array('force_canonical' => true));
+		// Else / after setting retun the value
+		return $this->WSDL;
 	}
 }

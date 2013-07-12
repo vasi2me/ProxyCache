@@ -68,8 +68,8 @@ class RestfulController extends AbstractRestfulController {
 
 	private function decodeByContentType($request){
 		$contentType = $request->getHeaders('Content-Type')->getFieldValue();
+		// Added below to fix firefox sends multiple semicolon
 		if(stripos($contentType, 'application/json') !== false) {
-		//if ($contentType == 'application/json') {
 			try {
 				$jsonObj = Json::decode($request->getContent(), Json::TYPE_OBJECT);
 			} catch (JsonRuntimeException $e) {
