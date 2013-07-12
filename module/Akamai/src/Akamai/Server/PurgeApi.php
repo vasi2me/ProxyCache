@@ -18,7 +18,8 @@ class PurgeApi {
 	{
 		$x = new PurgeResult();
 		$x->estTime = 2;
-		$x->modifiers = array("hi","name", "type"=>"idontknow");
+		
+		$x->modifiers = array($name =>$pwd,'network'=>$network, "opt"=>$opt,'uri'=>serialize($uri));
 		$x->resultCode = 200;
 		$x->sessionId = "ewrewerw";
 		$x->resultMsg = "xaere erew";
