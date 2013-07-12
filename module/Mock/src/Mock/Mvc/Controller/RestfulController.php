@@ -68,7 +68,8 @@ class RestfulController extends AbstractRestfulController {
 
 	private function decodeByContentType($request){
 		$contentType = $request->getHeaders('Content-Type')->getFieldValue();
-		if ($contentType == 'application/json') {
+		if(stripos($contentType, 'application/json') !== false) {
+		//if ($contentType == 'application/json') {
 			try {
 				$jsonObj = Json::decode($request->getContent(), Json::TYPE_OBJECT);
 			} catch (JsonRuntimeException $e) {
@@ -76,7 +77,7 @@ class RestfulController extends AbstractRestfulController {
 			}
 			return $jsonObj;
 		}
-		else if($contentType == 'application/xml'){
+		else if(stripos($contentType, 'application/xml') !== false) {
 			try {
 				// TEMP solution till Zf2 Xml Statregy is implemented
 				$arrayrequest =   XmlDecoder::fromXml($request->getContent());

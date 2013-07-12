@@ -16,7 +16,15 @@ class PurgeApi {
 	 */
 	public function purgeRequest($name, $pwd, $network, $opt, $uri	)
 	{
-		return new PurgeResult();
+		$x = new PurgeResult();
+		$x->estTime = 2;
+		$x->modifiers = array("hi","name", "type"=>"idontknow");
+		$x->resultCode = 200;
+		$x->sessionId = "ewrewerw";
+		$x->resultMsg = "xaere erew";
+		$x->uriIndex = 0;
+		
+		return $x;
 		
 	}
 	

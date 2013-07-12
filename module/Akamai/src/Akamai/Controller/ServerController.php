@@ -18,6 +18,7 @@ class ServerController extends AbstractActionController {
 		* Goes the parameter accessed function handleWSDL
 		* And load the functions, it will return the WSDL
 		*/
+		print_r($this->url()->fromRoute());exit;
 		if (isset ( $_GET [ 'wsdl' ])) {
 			$this->handleWSDL ();
 		} else {
