@@ -8,6 +8,7 @@ return array (
 				'Shoppingbag',
 				'Order',
 				'Akamai',
+				'Product',
 				
 		),
 		'module_listener_options' => array(
