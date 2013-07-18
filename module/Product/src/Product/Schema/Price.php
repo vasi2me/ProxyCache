@@ -8,6 +8,6 @@ class  Price  extends GenericFactory {
 	public $price ;
 
 	public function __construct(){
-		$this->price  = new ;
+		$this->price  = new Price\Price() ;
 	}
 }

@@ -44,13 +44,14 @@ class Upc {
 			"upcId" => 323423);
 	 
 	 
-	 
-	// public $bopsavailability" type="bopsavailability" minOccurs="0"/>
+	//" type="bopsavailability" minOccurs="0"/> 
+	public $bopsavailability = array();
 	
 	public $upcnumber = 432423432235324;
 	
 	
 	public function __construct(){
 		$this->attributes = new Attributes();
+		$this->bopsavailability = new BopsAvailability();
 	}
 }

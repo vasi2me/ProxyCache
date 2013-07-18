@@ -5,9 +5,9 @@ namespace Product\Schema ;
 
 class  SizeMap  extends GenericFactory {
 
-	public $sizeMap ;
+	public $sizemap ;
 
 	public function __construct(){
-		$this->sizeMap  = new ;
+		$this->sizemap  = array(new Size\Size(1), new Size\Size(2));
 	}
 }

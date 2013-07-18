@@ -5,9 +5,9 @@ namespace Product\Schema ;
 
 class ColorMap  extends GenericFactory  {
 
-	public $colorMap ;
+	public $colormap ;
 
 	public function __construct(){
-		$this->colorMap  = new ;
+		$this->colormap  = new ColorWay\ColorWayImage(1);
 	}
 }
