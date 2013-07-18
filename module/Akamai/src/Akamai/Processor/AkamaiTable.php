@@ -19,4 +19,8 @@ class AkamaiTable
 		$resultSet->next();
 		return $resultSet;
 	}
+	
+	public function getTableGateway(){
+		return $this->tableGateway;
+	}
 }

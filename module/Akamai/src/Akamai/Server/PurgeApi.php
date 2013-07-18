@@ -1,9 +1,23 @@
 <?php
 namespace Akamai\Server;
 
+use Akamai\Service\Database;
+
 
 
 class PurgeApi {
+	
+	/*implements ServiceLocatorAwareInterface {
+}
+  protected $serviceLocator;
+
+  public function setServiceLocator(ServiceLocatorInterface $serviceLocator) {
+    $this->serviceLocator = $serviceLocator;
+  }
+
+  public function getServiceLocator() {
+    return $this->serviceLocator;
+  }*/
 	
 	/**
 	 * 
@@ -20,7 +34,7 @@ class PurgeApi {
 		$x->estTime = 2;
 		
 		$x->modifiers = array($name =>$pwd,'network'=>$network, "opt"=>$opt,'uri'=>serialize($uri));
-		$x->resultCode = 200;
+		$x->resultCode = 100;
 		$x->sessionId = "ewrewerw";
 		$x->resultMsg = "xaere erew";
 		$x->uriIndex = 0;
