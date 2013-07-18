@@ -69,6 +69,13 @@ return array (
 		
 		
 		'service_manager' => array(
+				
+				'aliases' => array(
+						
+						'V4Product\Badge' => 'V4Product\Badges',
+						'V4Product\Upc' => 'V4Product\Upcs',
+						
+						),
 		
 				'factories' => array(
 		
@@ -83,7 +90,7 @@ return array (
 						'V4Product\ColorMap' => 'Product\Schema\ColorMap',
 						'V4Product\Corpclass' => 'Product\Schema\Corpclass',
 						'V4Product\DomainValuesMap' => 'Product\Schema\DomainValuesMap',
-						
+						'V4Product\Error' => 'Product\Schema\Error', // cammpt ne ised
 						'V4Product\Price' => 'Product\Schema\Price',
 						'V4Product\PrimaryImage' => 'Product\Schema\PrimaryImage',
 						'V4Product\ProductCategory' => 'Product\Schema\ProductCategory',

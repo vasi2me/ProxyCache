@@ -16,7 +16,11 @@ class Assembler implements FactoryInterface {
 	protected $servicelocator;
 	protected $response = array();
 	
-	public function parseOptions($options=array()){
+	protected $product= array();
+	protected $error= array();
+	protected $warning= array();
+	
+	public function parseOptions($options=array(), $id=43){
 		
 		$options = explode(',', $options);
 		
@@ -27,10 +31,21 @@ class Assembler implements FactoryInterface {
 				if($this->getServiceLocator()->has('V4Product\\' . ucfirst($group))) {
 					$groupResp = $this->getServiceLocator()->get('V4Product\\' . ucfirst($group));
 					
-					$this->response = (object) array_merge((array)$this->response,(array) $groupResp);
+					$this->product = (object) array_merge((array)$this->product,(array) $groupResp);
+				}
+				else {
+					$errorResp = $this->getServiceLocator()->get('V4Product\Error');
+					$this->error = (object) array_merge((array)$this->error,(array) $errorResp);
 				}
 				
 			}
+			
+			unset( $this->product->servicelocator);
+			unset($this->error->servicelocator);
+			$this->response["products"][] = $this->product;
+			if($this->error)
+			$this->response["errors"] = $this->error;
+			
 			$y = $this->objectToArray($this->response);
 		}
 		// we have a unnecessary property servicelocator in GenericFactory 
@@ -40,7 +55,7 @@ class Assembler implements FactoryInterface {
 	}
 	
 	public function getResponse(){
-		return $this->response;
+		return  $this->response;
 	}
 	
 	
