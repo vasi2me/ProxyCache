@@ -145,6 +145,9 @@ class RestfulController extends AbstractRestfulController {
 
 
 	protected function mockModel($data){
+		if(is_object($data)){
+			$data = (array) $data;
+		}
 		$viewModel = $this->acceptableViewModelSelector($this->acceptCriteria);
 		if ($viewModel instanceof JsonModel) {
 			return new JsonModel($data);
