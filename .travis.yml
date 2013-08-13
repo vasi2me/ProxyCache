@@ -1,0 +1,14 @@
+language: php
+
+php:
+    - 5.3
+    - 5.4
+    
+env:
+    - ZF2_PATH=./vendor/library
+    
+before_install:
+    - cd tests;
+    
+script:
+    - phpunit
