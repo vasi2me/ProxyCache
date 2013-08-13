@@ -1,6 +1,9 @@
 <?php
 namespace Mock\Mvc\Controller;
 
+use Zend\Log\LoggerAwareInterface;
+use Zend\Log\LoggerInterface;
+
 use Zend\Json\Exception\RuntimeException as JsonRuntimeException;
 use Zend\Json\Exception\RecursionException as JsonRecursionException;
 use Zend\Stdlib\RequestInterface as Request;
@@ -20,9 +23,15 @@ use Mock\Service\XmlDecoder;
  *and DRY easily
  */
 
-class RestfulController extends AbstractRestfulController {
+class RestfulController extends AbstractRestfulController implements LoggerAwareInterface
+{
+	
+	const CONTENT_TYPE_XML = 'xml';
+	
 	protected $notImplemented = array("success"=>false, "errors"=> "Functionality Not implemented");
 
+	protected $logger;
+	
 	protected $acceptCriteria = array(
 			'Zend\View\Model\JsonModel' => array(
 					'application/json',
@@ -65,11 +74,21 @@ class RestfulController extends AbstractRestfulController {
 		}
 	}
 
+	protected $contentType = array(
+        self::CONTENT_TYPE_JSON => array(
+            'application/json'
+        ) ,
+			self::CONTENT_TYPE_XML => array(
+					'application/xml'
+					)
+    );
 
 	private function decodeByContentType($request){
-		$contentType = $request->getHeaders('Content-Type')->getFieldValue();
+		// Used existing functions of Abstract Controller :)
+		//$contentType = $request->getHeaders('Content-Type')->getFieldValue();
 		// Added below to fix firefox sends multiple semicolon
-		if(stripos($contentType, 'application/json') !== false) {
+		//if(stripos($contentType, 'application/json') !== false) {
+			if($this->requestHasContentType($request, self::CONTENT_TYPE_JSON)) {
 			try {
 				$jsonObj = Json::decode($request->getContent(), Json::TYPE_OBJECT);
 			} catch (JsonRuntimeException $e) {
@@ -77,7 +96,8 @@ class RestfulController extends AbstractRestfulController {
 			}
 			return $jsonObj;
 		}
-		else if(stripos($contentType, 'application/xml') !== false) {
+		//else if(stripos($contentType, 'application/xml') !== false) {
+		else if($this->requestHasContentType($request, self::CONTENT_TYPE_XML)) {
 			try {
 				// TEMP solution till Zf2 Xml Statregy is implemented
 				$arrayrequest =   XmlDecoder::fromXml($request->getContent());
@@ -182,5 +202,15 @@ class RestfulController extends AbstractRestfulController {
 		$rdata = array("success"=>false, "message"=>"Unable to process", "errors"=> $e
 		);
 		return new JsonModel($rdata);
+	}
+	
+	public function setLogger(LoggerInterface $logger)
+	{
+		$this->logger = $logger;
+	}
+	
+	public function getLogger()
+	{
+		return $this->logger;
 	}
 }

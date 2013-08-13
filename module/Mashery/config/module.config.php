@@ -4,7 +4,14 @@
 return array (
 
 	
+		'service_manager' => array(
 		
+						
+				'factories' => array(
+		
+						'Mashery\Oauth2' => 'Mashery\Server\Oauth2\Oauth2',
+						),
+				),
 		
 		
 		'router' => array(

@@ -1,6 +1,6 @@
 <?php
 namespace Mock;
-
+use Zend\Log\LoggerAwareInterface;
 
 
 class Module  {
@@ -21,5 +21,23 @@ class Module  {
 		);
 	}
 	
+	/**
+	 * Initalize logger for Restful Controller so, that 
+	 * Logger can be used in extended controllers
+	 * @return multitype:multitype:NULL
+	 */
+	public function getControllerConfig()
+	{
+		return array(
+				'initializers' => array(
+						'logger' => function($instance, $sm) {
+							if ($instance instanceof LoggerAwareInterface) {
+								$logger = $sm->getServiceLocator()->get('Zend\Log');
+								$instance->setLogger($logger);
+							}
+						},
+				),
+		);
+	}
 	
 }

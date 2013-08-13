@@ -2,6 +2,7 @@
 namespace Mashery;
 
 use Zend\Mvc\MvcEvent;
+use Zend\Log\LoggerAwareInterface;
 
 
 class Module  {
@@ -10,7 +11,7 @@ class Module  {
 	{
 		return include __DIR__ . '/config/module.config.php';
 	}
-	
+
 	public function getAutoloaderConfig()
 	{
 		return array(
@@ -21,19 +22,22 @@ class Module  {
 				),
 		);
 	}
-	
-	public function onBootstrap(MvcEvent $e) {
-		$eventManager = $e->getApplication()->getEventManager();
-		//$eventManager->attach(MvcEvent::EVENT_DISPATCH, array($this, 'acceptTypePreDispatch'),1);
+
+	/*
+	 * All the Services under this module can implement
+	 * LoggerAwareInterface and Logger will be enabled for all of them
+	 */
+	public function getServiceConfig()
+	{
+		return array(
+				'initializers' => array(
+						'logger' => function($service, $sm) {
+							if ($service instanceof LoggerAwareInterface) {
+								$logger = $sm->get('Zend\Log');
+								$service->setLogger($logger);
+							}
+						}
+				),
+		);
 	}
-	
-	public function acceptTypePreDispatch($event) {
-		//$response = $event->getResponse();
-		
-        
-        
-        //$response->sendHeaders();
-        //exit;
-	}
-	
 }
