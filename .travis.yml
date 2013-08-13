@@ -5,7 +5,7 @@ php:
     - 5.4
     
 env:
-    - ZF2_PATH=./vendor/library
+    - ZF2_PATH=./vendor/zend_2.1.5
     
 before_install:
     - cd tests;
