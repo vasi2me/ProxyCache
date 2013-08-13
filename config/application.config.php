@@ -9,7 +9,7 @@ return array (
 				'Order',
 				'Akamai',
 				'Product',
-				'Psr',
+				
 				'Mashery',
 		),
 		'module_listener_options' => array(
