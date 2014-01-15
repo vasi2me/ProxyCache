@@ -20,6 +20,9 @@
 if (file_exists('vendor/autoload.php')) {
     $loader = include 'vendor/autoload.php';
 }
+else if(file_exists('libs/vendor/autoload.php')) {
+    $loader = include 'libs/vendor/autoload.php';
+	}
 
 $zf2Path = false;
 
