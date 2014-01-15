@@ -6,5 +6,4 @@ if [ ! -f "$OPENSHIFT_DATA_DIR/composer.phar" ]; then
 else
 	/usr/bin/php $OPENSHIFT_DATA_DIR/composer.phar self-update
 fi
- 
 ( unset GIT_DIR ; cd $OPENSHIFT_REPO_DIR ; /usr/bin/php $OPENSHIFT_DATA_DIR/composer.phar install )
