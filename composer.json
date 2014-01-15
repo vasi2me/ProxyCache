@@ -1,6 +1,6 @@
 {
     "name": "vasi2me/sgproxy",
-    "description": "Php Proxy with SQLite",
+    "description": "Php Proxy with SQLite db",
     "license": "BSD-3-Clause",
     "keywords": [
         "Proxy",
