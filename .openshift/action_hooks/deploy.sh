@@ -1,7 +1,10 @@
 #!/bin/bash
 # .openshift/action_hooks/deploy
-unset GIT_DIR
-cd $OPENSHIFT_REPO_DIR
-curl -sS https://getcomposer.org/installer | php
-php composer.phar install --prefer-source --no-interaction  // the arguments is used to work around github api rate limits
-php composer.phar dump-autoload
+export COMPOSER_HOME="$OPENSHIFT_DATA_DIR/.composer"
+if [ ! -f "$OPENSHIFT_DATA_DIR/composer.phar" ]; then
+    curl -s https://getcomposer.org/installer | /usr/bin/php -- --install-dir=$OPENSHIFT_DATA_DIR
+else
+	/usr/bin/php $OPENSHIFT_DATA_DIR/composer.phar self-update
+fi
+ 
+( unset GIT_DIR ; cd $OPENSHIFT_REPO_DIR ; /usr/bin/php $OPENSHIFT_DATA_DIR/composer.phar install )
