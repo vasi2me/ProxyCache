@@ -1,4 +1,3 @@
-// .openshift/action_hooks/deploy
 #!/bin/bash
 # .openshift/action_hooks/deploy
 unset GIT_DIR
