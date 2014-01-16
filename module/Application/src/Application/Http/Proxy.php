@@ -13,6 +13,7 @@ class Proxy implements FactoryInterface
 
 	private $_path;
 	private $_query;
+	private $_httpmethod;
 
 	private $_fromDb = false;
 	private $_urisId =0;
@@ -23,10 +24,11 @@ class Proxy implements FactoryInterface
 	private $_status = 500;
 
 
-	public function setPathQuery($path, $query)
+	public function setPathQuery($path, $query, $method='GET')
 	{
 		$this->_path = $path;
 		$this->_query = $query;
+		$this->_httpmethod = $method;
 	}
 
 	public function process(){
@@ -56,18 +58,18 @@ class Proxy implements FactoryInterface
 		$Uris = $this->getServiceLocator()->get('Database\Uris');
 		if($this->_urisId == 0 )
 		{
-			$d = $Uris->saveByPathQuery($this->_path, $this->_query);
+			$d = $Uris->saveByPathQuery($this->_path, $this->_query, $this->_httpmethod);
 			$this->_urisId = $d->getGeneratedValue();
 		}
 		$response = $this->getServiceLocator()->get('Database\Responses');
 
+		$rEntity = new \Application\Database\Entity\Responses();
+		$rEntity->setBody($this->_body);
+		$rEntity->setCode($this->_status);
+		
 		if($this->_responseId == 0)
 		{
-			$rEntity = new \Application\Database\Entity\Responses();
-			$rEntity->setBody($this->_body);
-			$rEntity->setCode($this->_status);
 			$dyid = $response->save($rEntity);
-				
 			$this->_responseId = $dyid->getGeneratedValue();
 			$uriUpdate = $Uris->findById($this->_urisId);
 				
@@ -75,7 +77,10 @@ class Proxy implements FactoryInterface
 			$uriUpdate->setUsemock(1);
 			//print_r($uriUpdate); exit;
 			$Uris->save($uriUpdate);
-				
+		}
+		else {
+			$rEntity->setId($this->_responseId);
+			$dyid = $response->save($rEntity);
 		}
 	}
 
@@ -108,19 +113,15 @@ class Proxy implements FactoryInterface
 	}
 
 
-	protected function saveRequestToDB(){
-
-
-	}
-
 	protected function isExistInDB(){
 		$Uris = $this->getServiceLocator()->get('Database\Uris');
-		$x = $Uris->findByPathQuery($this->_path, $this->_query);
+		$x = $Uris->findByPathQuery($this->_path, $this->_query, $this->_httpmethod);
 
 		if(is_object($x))
 		{
 			$this->_urisId = $x->getId();
 			$this->_responseId = $x->getResponseId();
+			$this->_httpmethod = $x->getHttpMethod();
 				
 		}
 

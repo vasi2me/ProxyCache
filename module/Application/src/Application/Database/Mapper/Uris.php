@@ -11,9 +11,9 @@ class Uris extends AbstractDbMapper
 
 	protected $tableName  = 'uris';
 
-	public function findByPathQuery($path,$query) {
+	public function findByPathQuery($path,$query, $method='GET') {
 		$select = $this->getSelect()
-		->where(array('path' => $path, 'query'=>$query));
+		->where(array('path' => $path, 'query'=>$query, 'http_method'=>$method));
 
 
 		$entity = $this->select($select)->current();
@@ -66,12 +66,12 @@ class Uris extends AbstractDbMapper
 		}
 	}
 
-	public function saveByPathQuery($path,$query) {
+	public function saveByPathQuery($path,$query, $method='GET') {
 		if(!is_string($path) || !is_string($query)) {
 
 		}
-		$input = array( "path"=> $path, "query"=>$query);
-		if(!$resp = $this->findByPathQuery($path, $query))
+		$input = array( "path"=> $path, "query"=>$query, 'http_method'=>$method);
+		if(!$resp = $this->findByPathQuery($path, $query, $method))
 			return $this->save($input);
 		else
 			return $this->save($resp);

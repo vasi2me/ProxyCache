@@ -12,6 +12,7 @@ class Uris  implements EntityInterface
 	public $query;
 	public $usemock;
 	public $response_id;
+	public $http_method;
 	
 
 	/**
@@ -156,6 +157,26 @@ class Uris  implements EntityInterface
 	 */
 	public function setResponseId($response_id){
 		$this->response_id = $response_id;
+		return $this;
+	}
+	
+	/**
+	 * Get http_method.
+	 *
+	 * @return int
+	 */
+	public function getHttpMethod(){
+		return $this->http_method;
+	}
+	
+	/**
+	 * Set http_method.
+	 *
+	 * @param int $response_id
+	 * @return EntityInterface
+	 */
+	public function setHttpMethod($http_method){
+		$this->http_method = $http_method;
 		return $this;
 	}
 	
