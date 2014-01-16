@@ -11,8 +11,8 @@ class Responses  implements EntityInterface
 	public $body;
 	public $headers;
 	public $cookies;
-	
-	
+
+
 
 	/**
 	 * Get id.
@@ -74,7 +74,7 @@ class Responses  implements EntityInterface
 		return $this;
 	}
 
-		/**
+	/**
 	 * Get body.
 	 *
 	 * @return string
@@ -93,8 +93,8 @@ class Responses  implements EntityInterface
 		$this->body = $body;
 		return $this;
 	}
-	
-	
+
+
 	/**
 	 * Get headers.
 	 *
@@ -103,7 +103,7 @@ class Responses  implements EntityInterface
 	public function getHeaders(){
 		return $this->headers;
 	}
-	
+
 	/**
 	 * Set headers.
 	 *
@@ -114,9 +114,9 @@ class Responses  implements EntityInterface
 		$this->headers = $headers;
 		return $this;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Get cookies.
 	 *
@@ -125,7 +125,7 @@ class Responses  implements EntityInterface
 	public function getCookies(){
 		return $this->cookies;
 	}
-	
+
 	/**
 	 * Set cookies.
 	 *
@@ -136,9 +136,9 @@ class Responses  implements EntityInterface
 		$this->cookies = $cookies;
 		return $this;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 }

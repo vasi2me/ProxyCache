@@ -13,7 +13,7 @@ class Uris  implements EntityInterface
 	public $usemock;
 	public $response_id;
 	public $http_method;
-	
+
 
 	/**
 	 * Get id.
@@ -75,7 +75,7 @@ class Uris  implements EntityInterface
 		return $this;
 	}
 
-		/**
+	/**
 	 * Get path.
 	 *
 	 * @return string
@@ -94,8 +94,8 @@ class Uris  implements EntityInterface
 		$this->path = $path;
 		return $this;
 	}
-	
-	
+
+
 	/**
 	 * Get query.
 	 *
@@ -104,7 +104,7 @@ class Uris  implements EntityInterface
 	public function getQuery(){
 		return $this->query;
 	}
-	
+
 	/**
 	 * Set query.
 	 *
@@ -115,9 +115,9 @@ class Uris  implements EntityInterface
 		$this->query = $query;
 		return $this;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Get usemock.
 	 *
@@ -126,7 +126,7 @@ class Uris  implements EntityInterface
 	public function getUsemock(){
 		return $this->usemock;
 	}
-	
+
 	/**
 	 * Set usemock.
 	 *
@@ -137,9 +137,9 @@ class Uris  implements EntityInterface
 		$this->usemock = $usemock;
 		return $this;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Get response_id.
 	 *
@@ -148,7 +148,7 @@ class Uris  implements EntityInterface
 	public function getResponseId(){
 		return $this->response_id;
 	}
-	
+
 	/**
 	 * Set response_id.
 	 *
@@ -159,7 +159,7 @@ class Uris  implements EntityInterface
 		$this->response_id = $response_id;
 		return $this;
 	}
-	
+
 	/**
 	 * Get http_method.
 	 *
@@ -168,7 +168,7 @@ class Uris  implements EntityInterface
 	public function getHttpMethod(){
 		return $this->http_method;
 	}
-	
+
 	/**
 	 * Set http_method.
 	 *
@@ -179,6 +179,6 @@ class Uris  implements EntityInterface
 		$this->http_method = $http_method;
 		return $this;
 	}
-	
-	
+
+
 }

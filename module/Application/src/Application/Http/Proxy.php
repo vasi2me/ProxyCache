@@ -143,15 +143,8 @@ class Proxy implements FactoryInterface
 	 */
 	public function isMockMode()
 	{
-		$isMock = false;
 		$groupResp = $this->getServiceLocator()->get('Database\Configs');
-		$result = $groupResp->findByName("Mock");
-		if(is_object($result) ){
-			if($result->getValue() == 1 || $result->getValue() == 'TRUE'
-					|| $result->getValue() == 'true' || $result->getValue() == 'True')
-				$isMock = TRUE;
-		}
-		return $isMock;
+		return $groupResp->checkFlagOf("Mock");
 	}
 
 

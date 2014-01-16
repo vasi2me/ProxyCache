@@ -34,12 +34,13 @@ return array (
 								),
 								'may_terminate' => true,
 						),
-						'ui' => array(
+						'config' => array(
 								'type' => 'segment',
 								'options' => array(
-										'route' => '/ui[/:action]',
+										'route' => '/config[/:action][/:id]',
 										'constraints' => array(
 												'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+												'id' => '[0-9]+',
 										),
 										'defaults' => array(
 												'controller' => 'indexController',

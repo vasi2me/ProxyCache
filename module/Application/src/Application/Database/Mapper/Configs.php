@@ -16,7 +16,8 @@ class Configs extends AbstractDbMapper
 		->where(array('name' => $name));
 
 
-		$entity = $this->select($select)->current();
+		//$entity = $this->select($select)->current();
+		$entity = $this->select($select);
 		$this->getEventManager()->trigger('find', $this, array('entity' => $entity));
 		return $entity;
 	}
@@ -36,8 +37,20 @@ class Configs extends AbstractDbMapper
 	}
 
 
-	public function getLatestResults($id){
-
+	/**
+	 * Identify whether we are currently in Record/proxy / DB Mock
+	 */
+	public function checkFlagOf($key)
+	{
+		$flag = false;
+		$result1 = $this->findByName($key);
+		if(is_object($result1) ){
+			$result = $result1->current();
+			if($result->getValue() == 1 || $result->getValue() == 'TRUE'
+					|| $result->getValue() == 'true' || $result->getValue() == 'True')
+				$flag = TRUE;
+		}
+		return $flag;
 	}
 
 
@@ -100,14 +113,14 @@ class Configs extends AbstractDbMapper
 
 	/*public function updateByName($entity, $where = null, $tableName = null, HydratorInterface $hydrator = null) {
 		if (!$where) {
-			if(is_object($entity))
-				$where =  array('name'=>  $entity->getName());
-			else
-				$where =  array('name'=>  $entity["name"]);
-		}
-		$result = parent::update($entity, $where, $tableName, $hydrator);
-		$this->getEventManager()->trigger('update', $this, array('entity' => $entity));
-		return $result;
+	if(is_object($entity))
+		$where =  array('name'=>  $entity->getName());
+	else
+		$where =  array('name'=>  $entity["name"]);
+	}
+	$result = parent::update($entity, $where, $tableName, $hydrator);
+	$this->getEventManager()->trigger('update', $this, array('entity' => $entity));
+	return $result;
 	}*/
 
 }
