@@ -48,6 +48,19 @@ return array (
 										),
 								),
 						),
+						
+						'recording' => array(
+								'type' => 'segment',
+								'options' => array(
+										'route' => '/recording[/:id]',
+										'constraints' => array(
+												'id' => '[0-9]+',
+										),
+										'defaults' => array(
+												'controller' => 'recordController',
+										),
+								),
+						),
 				),
 		),
 
@@ -55,7 +68,7 @@ return array (
 				'invokables' => array(
 						'getController' => 'Application\Controller\GetController',
 						'indexController' => 'Application\Controller\IndexController',
-
+						'recordController' => 'Application\Controller\RecordController',
 
 				),
 		),
