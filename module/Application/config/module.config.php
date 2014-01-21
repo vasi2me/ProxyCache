@@ -91,7 +91,8 @@ return array (
 				'factories' => array(
 						'Application\Http\Proxy' => 'Application\Http\Proxy',
 						'Application\Http\Client' => 'Application\Http\Client',
-							
+						'Application\Service\Recording' => 'Application\Service\Recording',
+						'Application\Service\Database' => 'Application\Service\Database',
 
 						'Application\Hydrator\Generic' => function($sm){
 							$hydrator = new \Application\Database\Mapper\GenericHydrator();

@@ -1,0 +1,93 @@
+<?php
+namespace Application\Service;
+
+
+
+use Zend\Filter\File\UpperCase;
+
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+
+class Recording implements FactoryInterface
+{
+	protected $servicelocator;
+
+
+	private $_queryParams;
+	private $_endpoint;
+	private $_body;
+	private $_httpmethod;
+	private $_headers;
+	private $_cookies;
+	private $_incommingRequest;
+	private $_reqStatus = false;
+	
+	public function setRequest($request=null, $postData=null){
+		$this->_incommingRequest = $request;
+		$this->_body = $postData;
+		
+		$this->getHeaders();
+		$this->getQuery();
+		$this->process();
+		//print_r($this->_endpoint);
+		//print_r($this->_queryParams);
+		// exit;
+	}
+
+	
+	public function process(){
+		if(is_array($this->_body) || is_object($this->_body)){
+			$db = $this->getServiceLocator()->get('Application\Service\Database');
+			$db->saveToDb($this->_endpoint, $this->_body,$this->_httpmethod,$this->_responseCode,$useMock = true, $this->_queryParams, $headers=null, $cookies=null);
+		}
+		else {
+			$this->_reqStatus = false;
+		}
+	}
+	
+	public function getBody(){
+		return array("success"=> $this->_reqStatus);
+	}
+	
+	protected function getHeaders(){
+		$this->_headers = $this->_incommingRequest->getHeaders();
+	}
+	
+	public function getStatusCode(){
+		return 201;
+	}
+	
+	protected function getQuery(){
+		$queryParams = $this->_incommingRequest->getQuery();
+		$this->_endpoint = $queryParams['path'];
+		$this->_queryParams = $queryParams['queryparams'];
+		$this->_responseCode = $queryParams['code'];
+		if(!$this->_responseCode)
+			$this->_responseCode = 200;
+		$this->_httpmethod = strtoupper($queryParams['method']);
+		if(!$this->_httpmethod)
+			$this->_httpmethod = 'GET';
+			
+		if($this->_endpoint){
+			return true;			
+		}
+		return false;
+	}
+
+	public function createService(ServiceLocatorInterface $serviceLocator) {
+		$this->servicelocator = $serviceLocator;
+		return $this;
+	}
+
+	/**
+	 * @return \Zend\ServiceManager\ServiceLocatorInterface
+	 */
+	public function getServiceLocator(){
+		return $this->servicelocator;
+	}
+
+	public function setServiceLocator($sl) {
+		$this->servicelocator = $sl;
+		return $this;
+	}
+}
