@@ -52,7 +52,7 @@ return array (
 						'recording' => array(
 								'type' => 'segment',
 								'options' => array(
-										'route' => '/recording[/:id]',
+										'route' => '/v4/recording[/:id]',
 										'constraints' => array(
 												'id' => '[0-9]+',
 										),
