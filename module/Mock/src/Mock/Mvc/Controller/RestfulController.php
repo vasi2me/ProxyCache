@@ -92,7 +92,8 @@ class RestfulController extends AbstractRestfulController implements LoggerAware
 			try {
 				$jsonObj = Json::decode($request->getContent(), Json::TYPE_OBJECT);
 			} catch (JsonRuntimeException $e) {
-				return $this->sendJsonException($e->getMessage());
+				$this->sendJsonException($e->getMessage());
+				return false;
 			}
 			return $jsonObj;
 		}
@@ -198,7 +199,7 @@ class RestfulController extends AbstractRestfulController implements LoggerAware
 
 
 	protected function sendJsonException($e){
-		$this->getResponse()->setStatusCode(500);
+		$this->getResponse()->setStatusCode(400);
 		$rdata = array("success"=>false, "message"=>"Unable to process", "errors"=> $e
 		);
 		return new JsonModel($rdata);

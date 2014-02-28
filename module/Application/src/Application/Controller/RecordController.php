@@ -15,7 +15,7 @@ class RecordController extends RestfulController
 		$this->getResponse()->setStatusCode($requestProcessor->getStatusCode());
 		$responseBody = $requestProcessor->getBody();
 		$jsonArr = array("success"=>false);
-		return $this->mockModel($jsonArr);
+		return $this->mockModel($responseBody);
 	}
 	
 	public function getList()
@@ -28,6 +28,7 @@ class RecordController extends RestfulController
 	
 	public function create($data=null)
 	{
+		
 		return $this->setRequest($this->getRequest(), $data);
 		
 		

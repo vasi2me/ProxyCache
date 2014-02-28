@@ -21,11 +21,11 @@ class Recording implements FactoryInterface
 	private $_cookies;
 	private $_incommingRequest;
 	private $_reqStatus = false;
-	
+
 	public function setRequest($request=null, $postData=null){
 		$this->_incommingRequest = $request;
 		$this->_body = $postData;
-		
+
 		$this->getHeaders();
 		$this->getQuery();
 		$this->process();
@@ -34,33 +34,42 @@ class Recording implements FactoryInterface
 		// exit;
 	}
 
-	
+
 	public function process(){
 		if(is_array($this->_body) || is_object($this->_body)){
 			$db = $this->getServiceLocator()->get('Application\Service\Database');
 			$db->saveToDb($this->_endpoint, $this->_body,$this->_httpmethod,$this->_responseCode,$useMock = true, $this->_queryParams, $headers=null, $cookies=null);
+			$this->_reqStatus = true;
 		}
 		else {
 			$this->_reqStatus = false;
 		}
 	}
-	
+
 	public function getBody(){
 		return array("success"=> $this->_reqStatus);
 	}
-	
+
 	protected function getHeaders(){
 		$this->_headers = $this->_incommingRequest->getHeaders();
 	}
-	
+
 	public function getStatusCode(){
+		if($this->_reqStatus)
 		return 201;
+		return 400;
 	}
-	
+
 	protected function getQuery(){
 		$queryParams = $this->_incommingRequest->getQuery();
 		$this->_endpoint = $queryParams['path'];
-		$this->_queryParams = $queryParams['queryparams'];
+		if(isset($queryParams['queryparams']))
+			$this->_queryParams = $queryParams['queryparams'];
+		else if (isset($queryParams['query']))
+			$this->_queryParams = $queryParams['query'];
+		else 
+			$this->_queryParams = "";
+		
 		$this->_responseCode = $queryParams['code'];
 		if(!$this->_responseCode)
 			$this->_responseCode = 200;
@@ -69,7 +78,7 @@ class Recording implements FactoryInterface
 			$this->_httpmethod = 'GET';
 			
 		if($this->_endpoint){
-			return true;			
+			return true;
 		}
 		return false;
 	}
