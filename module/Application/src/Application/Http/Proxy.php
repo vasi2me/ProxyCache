@@ -41,7 +41,7 @@ class Proxy implements FactoryInterface
 			$this->_status = $dbResp->getCode();
 				
 		}
-		else {
+		else if($this->_httpmethod == 'GET') {
 			$cli = $this->getServiceLocator()->get('Application\Http\Client');
 			if($cli->remoteRequest($this->_path,$this->_query))
 			{
@@ -50,7 +50,17 @@ class Proxy implements FactoryInterface
 				$this->saveToDb();
 			}
 		}
+		else if($this->_httpmethod == 'POST'){
+			$this->_body = '{"Error":"Please set POST response manually with HTTP Status code in ProxyCache DB","Error2":"This request will not be proxied"}';
+			$this->_status = 200;
+			$this->saveToDb();
+		}
 
+		else if($this->_httpmethod == 'PUT'){
+			$this->_body = '{"Error":"Please set PUT response manually with HTTP Status code in ProxyCache DB","Error2":"This request will not be proxied"}';
+			$this->_status = 200;
+			$this->saveToDb();
+		}
 
 	}
 

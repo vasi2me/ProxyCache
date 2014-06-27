@@ -22,14 +22,14 @@ return array (
 								),
 								'may_terminate' => true,
 						),
-
+	//TODO fix the /config POST and v4/recording post both will not work
 						'post' => array(
 								'type'    => 'method',
 								'options' => array(
 										'verb'    => 'post,put',
 										'defaults' => array(
-												'controller' => 'indexController',
-												'action'=> 'index',
+												'controller' => 'postController',
+												//'action'=> 'index',
 										),
 								),
 								'may_terminate' => true,
@@ -69,6 +69,7 @@ return array (
 						'getController' => 'Application\Controller\GetController',
 						'indexController' => 'Application\Controller\IndexController',
 						'recordController' => 'Application\Controller\RecordController',
+						'postController' => 'Application\Controller\PostController',
 
 				),
 		),
