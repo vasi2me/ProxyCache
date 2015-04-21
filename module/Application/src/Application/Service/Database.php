@@ -76,6 +76,9 @@ class Database implements FactoryInterface
 		}
 	}
 	
+	public function getMessages(){
+		return $this->_failReason;
+	}
 	
 	
 	protected function isExistInDB(){

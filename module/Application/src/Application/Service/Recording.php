@@ -21,6 +21,7 @@ class Recording implements FactoryInterface
 	private $_cookies;
 	private $_incommingRequest;
 	private $_reqStatus = false;
+	private $_dbMessages = array();
 
 	public function setRequest($request=null, $postData=null){
 		$this->_incommingRequest = $request;
@@ -40,14 +41,22 @@ class Recording implements FactoryInterface
 			$db = $this->getServiceLocator()->get('Application\Service\Database');
 			$db->saveToDb($this->_endpoint, $this->_body,$this->_httpmethod,$this->_responseCode,$useMock = true, $this->_queryParams, $headers=null, $cookies=null);
 			$this->_reqStatus = true;
+			$this->_dbMessages = $db->getMessages();
 		}
 		else {
 			$this->_reqStatus = false;
 		}
 	}
+	
+	public function delete(){
+		
+	}
 
 	public function getBody(){
-		return array("success"=> $this->_reqStatus);
+		//return array("success"=> $this->_reqStatus);
+		$d["success"] = $this->_reqStatus;
+		$d["messages"] = $this->_dbMessages;
+		return $d;
 	}
 
 	protected function getHeaders(){
