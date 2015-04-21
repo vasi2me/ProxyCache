@@ -26,7 +26,7 @@ return array (
 						'post' => array(
 								'type'    => 'method',
 								'options' => array(
-										'verb'    => 'post,put,delete',
+										'verb'    => 'post,put,delete,patch',
 										'defaults' => array(
 												'controller' => 'postController',
 												//'action'=> 'index',

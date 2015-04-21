@@ -99,4 +99,27 @@ class PostController extends RestfulController {
 		$jsonArray = json_decode($re->getBody());
 		return $this->mockModel($jsonArray);
 	}
+
+	public function patch($id,$data){
+		$path = $this->getRequest()->getUri()->getPath();
+		$query = $this->getRequest()->getUri()->getQuery();
+
+		$request  = $this->getRequest()->getHeaders('X-Macys-Webservice-Client-Id');
+		if(!$request)
+		{
+			$this->getResponse()->setStatusCode(401);
+			return $this->mockModel($this->notAuthorized);
+		}
+		$re = $this->getServiceLocator()->get('Application\Http\Proxy');
+		$re->setPathQuery($path,$query, 'PATCH');
+		$re->process();
+
+		$this->getResponse()->setStatusCode($re->getStatusCode());
+		$jsonArray = json_decode($re->getBody());
+		return $this->mockModel($jsonArray);
+	}
+
+	public function patchList($id){
+		return $this->patch($id,"temp");
+	}
 }

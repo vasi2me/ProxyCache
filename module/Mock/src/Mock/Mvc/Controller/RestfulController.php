@@ -163,7 +163,19 @@ class RestfulController extends AbstractRestfulController implements LoggerAware
 		return $this->mockModel($res);
 	}
 
+	//TODO Use this common function insted of duplicate code
+	protected function validateHeaders($httpMethod){
+		$path = $this->getRequest()->getUri()->getPath();
+		$query = $this->getRequest()->getUri()->getQuery();
 
+		$request  = $this->getRequest()->getHeaders('X-Macys-Webservice-Client-Id');
+		if(!$request)
+		{
+			$this->getResponse()->setStatusCode(401);
+			return $this->notAuthorized;
+		}
+		return true;
+	}
 
 	protected function mockModel($data){
 		if(is_object($data)){
