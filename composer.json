@@ -9,6 +9,6 @@
     "homepage": "https://github.com/vasi2me/",
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "2.2.*"
+        "zendframework/zendframework": "2.2.5"
     }
 }

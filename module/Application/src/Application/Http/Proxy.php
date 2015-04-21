@@ -62,6 +62,12 @@ class Proxy implements FactoryInterface
 			$this->saveToDb();
 		}
 
+		else if($this->_httpmethod == 'DELETE'){
+			$this->_body = '{"Error":"Please set DELETE response manually with HTTP Status code in ProxyCache DB","Error2":"This request will not be proxied"}';
+			$this->_status = 200;
+			$this->saveToDb();
+		}
+
 	}
 
 	protected function saveToDb(){

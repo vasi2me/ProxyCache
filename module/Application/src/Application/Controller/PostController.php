@@ -61,6 +61,42 @@ class PostController extends RestfulController {
 		
 		return $this->mockModel($jsonArray);
 	}
-	
-	
+
+	public function update($id,$data){
+		$path = $this->getRequest()->getUri()->getPath();
+		$query = $this->getRequest()->getUri()->getQuery();
+
+		$request  = $this->getRequest()->getHeaders('X-Macys-Webservice-Client-Id');
+		if(!$request)
+		{
+			$this->getResponse()->setStatusCode(401);
+			return $this->mockModel($this->notAuthorized);
+		}
+		$re = $this->getServiceLocator()->get('Application\Http\Proxy');
+		$re->setPathQuery($path,$query, 'PUT');
+		$re->process();
+
+		$this->getResponse()->setStatusCode($re->getStatusCode());
+		$jsonArray = json_decode($re->getBody());
+		return $this->mockModel($jsonArray);
+	}
+
+	public function delete($id){
+		$path = $this->getRequest()->getUri()->getPath();
+		$query = $this->getRequest()->getUri()->getQuery();
+
+		$request  = $this->getRequest()->getHeaders('X-Macys-Webservice-Client-Id');
+		if(!$request)
+		{
+			$this->getResponse()->setStatusCode(401);
+			return $this->mockModel($this->notAuthorized);
+		}
+		$re = $this->getServiceLocator()->get('Application\Http\Proxy');
+		$re->setPathQuery($path,$query, 'DELETE');
+		$re->process();
+
+		$this->getResponse()->setStatusCode($re->getStatusCode());
+		$jsonArray = json_decode($re->getBody());
+		return $this->mockModel($jsonArray);
+	}
 }
